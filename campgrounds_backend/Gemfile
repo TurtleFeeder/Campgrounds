@@ -50,3 +50,5 @@ gem 'active_model_serializers'
 gem 'rest-client'
 # dotenv to prevent .env file from being pushed up to github
 gem 'dotenv-rails', groups: [:development, :test]
+
+gem "nokogiri", "~> 1.8"
