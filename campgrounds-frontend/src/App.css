@@ -30,3 +30,40 @@
     transform: rotate(360deg);
   }
 }
+
+/* mapboxgl's div style */
+.map-style {
+  width: 60vw;
+  height: 40vw;
+  text-align: justify;
+  margin: 0 auto;
+}
+
+/* facilities container style */
+.facility-container-style {
+  height: 40vw;
+  text-align: justify;
+  margin: 0 auto;
+}
+
+/* Results div - 2 column style */
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.left {
+  width: 70%;
+}
+
+.right {
+  width: 30%;
+  overflow: auto;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
