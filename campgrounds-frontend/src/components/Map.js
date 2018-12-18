@@ -9,7 +9,16 @@ class Map extends Component {
     zoom: 6
   }
 
+  // figure out how to change state lng & lat when implementing the search functionality - i want the lng & lat to be the first facility of the searched state so that the map would be loaded to center on there
+  
+    // const startingFacility = this.props.facilities.find(f => !!f.FacilityLongitude && !!f.FacilityLatitude)
+    // console.log('in Map componentDidUpdate',startingFacility);
+    //
+    // this.setState({lng: startingFacility.FacilityLongitude, lat: startingFacility.FacilityLatitude}, ()=>console.log('set state to startingFacility', this.state))
+
   componentDidMount() {
+    console.log('in Map componentDidMount');
+
     mapboxgl.accessToken = process.env.REACT_APP_MAP_TOKEN
     const { lng, lat, zoom } = this.state;
 
@@ -20,6 +29,9 @@ class Map extends Component {
         zoom
     });
 
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
+
     map.on('move', () => {
       const { lng, lat } = map.getCenter();
       this.setState({
@@ -28,7 +40,6 @@ class Map extends Component {
         zoom: map.getZoom().toFixed(2)
       });
     });
-
 
     map.on('load', () => {
       const geoData = this.props.facilities.filter(f => f.GEOJSON.COORDINATES !== null).map(f => {
@@ -40,6 +51,7 @@ class Map extends Component {
           },
           "properties": {
             "icon": "campsite-15",
+            "facilityId": f.FacilityID,
             "title": f.FacilityName,
             "lng": f.FacilityLongitude,
             "lat": f.FacilityLatitude
@@ -70,13 +82,6 @@ class Map extends Component {
       map.on('click', (e) => {
         const features = map.queryRenderedFeatures(e.point, {'layers': ['facilities']})
         console.log('in map.on click features', features);
-        const filteredFeatures = features.filter(f => {
-          console.log('in features find', e);
-          // debugger;
-          // Math.abs(f.properties.lng) >= Math.abs(e.lngLat.lng-5) && Math.abs(f.properties.lng) <= Math.abs(e.lngLat.lng+5)
-          console.log('in features find', e.lngLat);
-          return (f.properties.lng >= e.lngLat.lng-5 && f.properties.lng <= e.lngLat.lng+5) && (f.properties.lat >= e.lngLat.lat-5 && f.properties.lat <= e.lngLat.lat+5)
-        })
 
         if (!features.length) {
           return;
@@ -91,14 +96,8 @@ class Map extends Component {
           .setLngLat(feature.geometry.coordinates)
           .addTo(map);
 
+          map.flyTo({center: feature.geometry.coordinates, zoom: 9});
 
-        // features.forEach((feature) => {
-        //   let popup = new mapboxgl.Popup({offset: [0, -15]})
-        //   .setLngLat(feature.geometry.coordinates)
-        //   .setHTML('<h3>'+ feature.properties.title + '</h3>')
-        //   .setLngLat(feature.geometry.coordinates)
-        //   .addTo(map)
-        // })
       }) // end map.on click
 
       map.on('mousemove', (e) => {
