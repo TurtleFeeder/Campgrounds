@@ -11,7 +11,7 @@ class Results extends Component {
   }
 
   componentDidMount() {
-    fetch(FACILITIES_URL).then(r=>r.json()).then(data => this.setState({facilities: data},()=>console.log('in componentDidMount',this.state)))
+    fetch(FACILITIES_URL).then(r=>r.json()).then(data => this.setState({facilities: data},()=>console.log('in Result componentDidMount',this.state)))
   }
 
   render() {

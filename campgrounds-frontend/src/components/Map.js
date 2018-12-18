@@ -2,15 +2,35 @@ import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 
+const isElementOnScreen = (facility, container) => {
+  console.log('in isElementOnScreen');
+  const element = document.getElementById(facility.properties.facilityId);
+  console.log('in isElementOnScreen', element);
+  const bounds = element.getBoundingClientRect();
+  // debugger;
+  return bounds.top < container.offsetHeight && bounds.bottom > 0;
+}
+
+const setActiveFeature = (facility, facilityInViewId, map) => {
+  console.log('in setActiveFeature', facility, facilityInViewId, map);
+  // debugger;
+  if (facility.properties.facilityID === facilityInViewId) return;
+
+  map.flyTo({center: facility.geometry.coordinates, zoom: 8})
+
+}
+
+
 class Map extends Component {
   state = {
     lng: -73.8858333,
     lat: 40.5958333,
-    zoom: 6
+    zoom: 6,
+    facilityInViewId: null
   }
 
   // figure out how to change state lng & lat when implementing the search functionality - i want the lng & lat to be the first facility of the searched state so that the map would be loaded to center on there
-  
+
     // const startingFacility = this.props.facilities.find(f => !!f.FacilityLongitude && !!f.FacilityLatitude)
     // console.log('in Map componentDidUpdate',startingFacility);
     //
@@ -98,6 +118,8 @@ class Map extends Component {
 
           map.flyTo({center: feature.geometry.coordinates, zoom: 9});
 
+          document.getElementById(feature.properties.facilityId).scrollIntoView({behavior: 'smooth'})
+
       }) // end map.on click
 
       map.on('mousemove', (e) => {
@@ -105,6 +127,17 @@ class Map extends Component {
         // console.log('in map.on mousemove', features);
         map.getCanvas().style.cursor = features.length ? 'pointer' : '';
       })
+
+      const container = document.getElementById("Facilities-Container")
+      container.onscroll = () => {
+        for (var i = 0; i < geoData.length; i++) {
+          let feat = geoData[i];
+          if (isElementOnScreen(feat, container)) {
+            this.setState({facilityInViewId: feat.properties.facilityId}, () => setActiveFeature(feat, this.state.facilityInViewId, map))
+
+          }
+        }
+      }
 
     }) // end map.on load
 
