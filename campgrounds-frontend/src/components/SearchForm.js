@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input } from 'semantic-ui-react';
+import { Form, Input, Grid } from 'semantic-ui-react';
 
 class SearchForm extends Component {
   state = {
@@ -13,11 +13,10 @@ class SearchForm extends Component {
   render() {
     return (
       <Form>
-        <Form.Field inline>
-          <label>Search By State</label>
-          <Input name='input' placeholder='NY' value={this.state.input} onChange={this.handleChange}/>
-        </Form.Field>
-        <Form.Button content='Submit'/>
+        <Form.Group>
+          <Input name='input' placeholder='Search by State (ex. NY)' value={this.state.input} onChange={this.handleChange}/>
+          <Form.Button content='Search'/>
+        </Form.Group>
       </Form>
     )
   }

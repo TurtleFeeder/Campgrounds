@@ -3,21 +3,14 @@ import mapboxgl from 'mapbox-gl';
 
 
 const isElementOnScreen = (facility, container) => {
-  console.log('in isElementOnScreen');
   const element = document.getElementById(facility.properties.facilityId);
-  console.log('in isElementOnScreen', element);
   const bounds = element.getBoundingClientRect();
-  // debugger;
   return bounds.top < container.offsetHeight && bounds.bottom > 0;
 }
 
 const setActiveFeature = (facility, facilityInViewId, map) => {
-  console.log('in setActiveFeature', facility, facilityInViewId, map);
-  // debugger;
   if (facility.properties.facilityID === facilityInViewId) return;
-
   map.flyTo({center: facility.geometry.coordinates, zoom: 8})
-
 }
 
 
@@ -112,7 +105,7 @@ class Map extends Component {
 
         const popup = new mapboxgl.Popup({offset: 25})
           .setLngLat(feature.geometry.coordinates)
-          .setHTML('<h3>'+ feature.properties.title + '</h3>')
+          .setHTML('<h4>'+ feature.properties.title + '</h4>')
           .setLngLat(feature.geometry.coordinates)
           .addTo(map);
 
