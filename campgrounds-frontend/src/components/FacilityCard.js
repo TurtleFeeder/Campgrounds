@@ -25,7 +25,7 @@ function getImageUrl(array) {
 
 export default function FacilityCard({facility}) {
   return (
-    <div id={facility.FacilityID}>
+    <div id={facility.FacilityID} className="border-shadow">
     <img src={getImageUrl(facility.MEDIA)} width={100} height={100} />
       <h4>{facility.FacilityName}</h4>
       <h5>{facility.RECAREA.length >= 1 ? `Part of ${facility.RECAREA[0]['RecAreaName']}` : null}</h5>

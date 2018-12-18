@@ -16,12 +16,11 @@ class Results extends Component {
 
   render() {
     return (
-      <div id="Results" className="row">
-          <div id="Map" className="column left">
-            <h1>MAP SPACE</h1>
+      <div id="Results" className="flex-grid">
+          <div id="Map" className="col-left">
             <Map facilities={this.state.facilities}/>
           </div>
-          <div id="Facilities-Container" className="column right facility-container-style">
+          <div id="Facilities-Container" className="col-right facility-container-style">
             {this.state.facilities ? this.state.facilities.map(f=> <FacilityCard  key={f.FacilityID} facility={f}/>) : null}
           </div>
       </div>
