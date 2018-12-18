@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Results from './containers/Results';
+import SearchContainer from './containers/SearchContainer';
 
 class App extends Component {
 
@@ -12,7 +12,7 @@ class App extends Component {
           <h1>Campgrounds</h1>
         </header>
         <h1>Main Container</h1>
-          <Results />
+          <SearchContainer />
       </div>
     );
   }
