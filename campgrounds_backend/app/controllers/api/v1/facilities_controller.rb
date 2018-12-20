@@ -5,10 +5,16 @@ class Api::V1::FacilitiesController < ApplicationController
     render json: facilities, status: :ok
   end
 
+  def create
+    facilities = ApiService.getFacilities(facilities_params[:abbrev])
+    # byebug
+    render json: facilities, status: :ok
+  end
+
   private
 # will the params get passed back here to get the state entered?
   def facilities_params
-    params.require(:facility).permit(:stateInitials)
+    params.require(:facility).permit(:abbrev)
   end
 
 end #end FacilitiesController class

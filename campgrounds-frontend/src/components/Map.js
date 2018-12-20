@@ -3,23 +3,27 @@ import mapboxgl from 'mapbox-gl';
 
 
 const isElementOnScreen = (facility, container) => {
-  const element = document.getElementById(facility.properties.facilityId);
+  const element = document.getElementById(facility.FacilityID);
+  // debugger;
   const bounds = element.getBoundingClientRect();
+  // return Math.round(bounds.top) === container.offsetTop || (bounds.top < container.offsetHeight && bounds.bottom > 0);
   return bounds.top < container.offsetHeight && bounds.bottom > 0;
 }
 
 const setActiveFeature = (facility, facilityInViewId, map) => {
-  if (facility.properties.facilityID === facilityInViewId) return;
-  map.flyTo({center: facility.geometry.coordinates, zoom: 8})
+  if (facility.facilityID === facilityInViewId) return;
+  map.flyTo({center: facility.GEOJSON.COORDINATES, zoom: 8, speed: 0.4, curve: 0.9})
 }
 
 
 class Map extends Component {
   state = {
-    lng: -73.8858333,
-    lat: 40.5958333,
+    selectedStateAbbrev: this.props.selectedState.abbrev,
+    lng: this.props.selectedState.longitude,
+    lat: this.props.selectedState.latitude,
     zoom: 6,
-    facilityInViewId: null
+    facilityInViewId: null,
+    map: null
   }
 
   // figure out how to change state lng & lat when implementing the search functionality - i want the lng & lat to be the first facility of the searched state so that the map would be loaded to center on there
@@ -29,15 +33,55 @@ class Map extends Component {
     //
     // this.setState({lng: startingFacility.FacilityLongitude, lat: startingFacility.FacilityLatitude}, ()=>console.log('set state to startingFacility', this.state))
 
+    componentDidUpdate(prevProps) {
+      if (this.props.selectedState.abbrev !== prevProps.selectedState.abbrev) {
+        this.setState({
+          selectedStateAbbrev: this.props.selectedState.abbrev,
+          lng: this.props.selectedState.longitude,
+          lat: this.props.selectedState.latitude,
+          zoom: 6,
+          facilityInViewId: null
+        }, ()=> {
+          // debugger;
+
+          const geoData = this.props.facilities.filter(f => f.GEOJSON.COORDINATES !== null).map(f => {
+            return {
+              "type": "Feature",
+              "geometry": {
+                "type": f.GEOJSON.TYPE,
+                "coordinates": f.GEOJSON.COORDINATES
+              },
+              "properties": {
+                "icon": "campsite-15",
+                "facilityId": f.FacilityID,
+                "title": f.FacilityName,
+                "lng": f.FacilityLongitude,
+                "lat": f.FacilityLatitude
+              }
+            }
+          }) // end geoData
+
+          const map = this.state.map
+
+          map.getSource('facilities').setData({
+            "type": "FeatureCollection",
+            "features": geoData
+          })
+
+          const stateCenterCoord = [this.state.lng, this.state.lat]
+          map.flyTo({center: stateCenterCoord, zoom: 6, speed: 0.4, curve: 0.9});
+        }) // end setState
+      }
+    }
+
   componentDidMount() {
-    console.log('in Map componentDidMount');
 
     mapboxgl.accessToken = process.env.REACT_APP_MAP_TOKEN
     const { lng, lat, zoom } = this.state;
 
     const map = new mapboxgl.Map({
         container: this.mapContainer,
-        style: 'mapbox://styles/mapbox/outdoors-v10',
+        style: 'mapbox://styles/mapbox/outdoors-v10?optimize=true',
         center: [lng, lat],
         zoom
     });
@@ -109,7 +153,7 @@ class Map extends Component {
           .setLngLat(feature.geometry.coordinates)
           .addTo(map);
 
-          map.flyTo({center: feature.geometry.coordinates, zoom: 9});
+          map.flyTo({center: feature.geometry.coordinates, zoom: 8, speed: 0.4, curve: 0.9});
 
           document.getElementById(feature.properties.facilityId).scrollIntoView({behavior: 'smooth'})
 
@@ -123,15 +167,17 @@ class Map extends Component {
 
       const container = document.getElementById("Facilities-Container")
       container.onscroll = () => {
-        for (var i = 0; i < geoData.length; i++) {
-          let feat = geoData[i];
+        const facilities = this.props.facilities.filter(f => f.GEOJSON.COORDINATES !== null)
+        for (var i = 0; i < facilities.length; i++) {
+          let feat = facilities[i];
           if (isElementOnScreen(feat, container)) {
-            this.setState({facilityInViewId: feat.properties.facilityId}, () => setActiveFeature(feat, this.state.facilityInViewId, map))
-
+            this.setState({facilityInViewId: feat.FacilityID}, () => setActiveFeature(feat, this.state.facilityInViewId, map))
           }
         }
       }
 
+      this.setState({map: map}, ()=> console.log('added map to state in componentDidMount', this.state))
+      console.log('in Map componentDidMount map', map);
     }) // end map.on load
 
 
@@ -139,7 +185,7 @@ class Map extends Component {
 
   render() {
     return (
-      <div ref={el => this.mapContainer = el} className='map-style'></div>
+      <div id="Mapbox-Map" ref={el => this.mapContainer = el} className='map-style'></div>
     )
   }
 
