@@ -65,5 +65,21 @@
 /* facility card border shadow */
 .border-shadow {
   box-shadow: 0px 15px 10px -15px;
+  padding-top: 5vw;
+}
+
+/* SearchContainer - form */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  position: relative;
+  padding-bottom: 15px;
   padding-top: 15px;
+}
+
+/* FacilityCard */
+.facility-card {
+  height: 30vw;
 }
