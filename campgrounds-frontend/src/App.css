@@ -75,6 +75,8 @@
   align-items: center;
   align-content: center;
   position: relative;
+  padding-bottom: 15px;
+  padding-top: 15px;
 }
 
 /* FacilityCard */

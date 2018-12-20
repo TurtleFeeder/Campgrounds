@@ -29,7 +29,7 @@ class SearchForm extends Component {
       if (this.state.value.length < 1) return this.resetComponent()
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = result => re.test(result.title)
+      const isMatch = result => re.test(result.abbrev) || re.test(result.title)
 
       this.setState({
         isLoading: false,
@@ -50,37 +50,16 @@ class SearchForm extends Component {
             loading={isLoading}
             onResultSelect={this.handleResultSelect}
             onSearchChange={_.debounce(this.handleSearchChange, 500, {leading: true})}
-            results={results}
+            results={results.slice(0,8)}
             value={value}
             resultRenderer={resultRenderer}
+            placeholder="Search by State"
           />
         </Grid.Column>
       </Grid>
     )
   }
 
-}
-
-// class SearchForm extends Component {
-//   state = {
-//     input: ''
-//   }
-//
-//   handleChange = (e, {name, value}) => {
-//     this.setState({[name]: value})
-//   }
-//
-//   render() {
-//     return (
-//       <Form>
-//         <Form.Group>
-//           <Input name='input' placeholder='Search by State (ex. NY)' value={this.state.input} onChange={this.handleChange}/>
-//           <Form.Button content='Search'/>
-//         </Form.Group>
-//       </Form>
-//     )
-//   }
-//
-// }
+} // end SearchForm class
 
 export default SearchForm

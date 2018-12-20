@@ -26,13 +26,6 @@ class Map extends Component {
     map: null
   }
 
-  // figure out how to change state lng & lat when implementing the search functionality - i want the lng & lat to be the first facility of the searched state so that the map would be loaded to center on there
-
-    // const startingFacility = this.props.facilities.find(f => !!f.FacilityLongitude && !!f.FacilityLatitude)
-    // console.log('in Map componentDidUpdate',startingFacility);
-    //
-    // this.setState({lng: startingFacility.FacilityLongitude, lat: startingFacility.FacilityLatitude}, ()=>console.log('set state to startingFacility', this.state))
-
     componentDidUpdate(prevProps) {
       if (this.props.selectedState.abbrev !== prevProps.selectedState.abbrev) {
         this.setState({
@@ -42,8 +35,6 @@ class Map extends Component {
           zoom: 6,
           facilityInViewId: null
         }, ()=> {
-          // debugger;
-
           const geoData = this.props.facilities.filter(f => f.GEOJSON.COORDINATES !== null).map(f => {
             return {
               "type": "Feature",
@@ -145,7 +136,6 @@ class Map extends Component {
         }
 
         const feature = features[0];
-        console.log('in map.on click features[0]', feature);
 
         const popup = new mapboxgl.Popup({offset: 25})
           .setLngLat(feature.geometry.coordinates)
@@ -161,7 +151,6 @@ class Map extends Component {
 
       map.on('mousemove', (e) => {
         const features = map.queryRenderedFeatures(e.point, {layers: ['facilities']})
-        // console.log('in map.on mousemove', features);
         map.getCanvas().style.cursor = features.length ? 'pointer' : '';
       })
 
@@ -177,7 +166,6 @@ class Map extends Component {
       }
 
       this.setState({map: map}, ()=> console.log('added map to state in componentDidMount', this.state))
-      console.log('in Map componentDidMount map', map);
     }) // end map.on load
 
 
