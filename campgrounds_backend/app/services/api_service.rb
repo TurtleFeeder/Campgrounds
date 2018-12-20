@@ -8,11 +8,10 @@ module ApiService
     response = RestClient.get(full_url, header)
     facilities = JSON.parse(response)['RECDATA']
     facilities.map do |facility|
-      # map over facilities array and parse only the FacilityDescription attribute that's a string of html tags & text. returns the whole facility object for the facilities control to render out.
+      # map over facilities array and parse only the FacilityDescription attribute that's a string of html tags & text. returns the whole facility object for the facilities controller to render out.
       facility['FacilityDescription'] = Nokogiri::HTML.parse(facility['FacilityDescription']).text
       facility
     end
-    # byebug
   end # end getFacilities
 
   def self.getStates

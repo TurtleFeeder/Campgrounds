@@ -4,9 +4,7 @@ import mapboxgl from 'mapbox-gl';
 
 const isElementOnScreen = (facility, container) => {
   const element = document.getElementById(facility.FacilityID);
-  // debugger;
   const bounds = element.getBoundingClientRect();
-  // return Math.round(bounds.top) === container.offsetTop || (bounds.top < container.offsetHeight && bounds.bottom > 0);
   return bounds.top < container.offsetHeight && bounds.bottom > 0;
 }
 
@@ -23,7 +21,8 @@ class Map extends Component {
     lat: this.props.selectedState.latitude,
     zoom: 6,
     facilityInViewId: null,
-    map: null
+    map: null,
+    popupActive: false
   }
 
     componentDidUpdate(prevProps) {
@@ -52,6 +51,8 @@ class Map extends Component {
             }
           }) // end geoData
 
+          // const container = document.getElementById("Facilities-Container")
+          // container.scrollTop = 0;
           const map = this.state.map
 
           map.getSource('facilities').setData({
