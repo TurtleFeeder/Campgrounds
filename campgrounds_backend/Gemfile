@@ -14,7 +14,7 @@ gem 'puma', '~> 3.11'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -44,11 +44,13 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-# Serializer allows you to specify the shape of your data when making requests.
-gem 'active_model_serializers'
 # rest-client to communicate with public API
 gem 'rest-client'
 # dotenv to prevent .env file from being pushed up to github
 gem 'dotenv-rails', groups: [:development, :test]
 
 gem "nokogiri", "~> 1.8"
+
+gem "jwt", "~> 2.1"
+# Serializer allows you to specify the shape of your data when making requests.
+gem "active_model_serializers", "~> 0.10.8"

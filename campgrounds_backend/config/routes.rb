@@ -4,7 +4,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :facilities
       resources :states, only: [:index]
-      resources :users
+      resources :users, only: [:index, :create]
+      post '/login', to: 'auth#create'
     end
   end
 end

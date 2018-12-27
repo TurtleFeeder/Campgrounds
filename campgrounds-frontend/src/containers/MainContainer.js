@@ -13,11 +13,25 @@ class MainContainer extends Component {
 
   loginUser = (email, password) => {
     console.log('in loginUser', email, password);
-    fetch(process.env.REACT_APP_USER_URL).then(r=>r.json()).then(data=> this.setState({user: data[0]}))
+    fetch(process.env.REACT_APP_USER_URL).then(r=>r.json()).then(data=> this.setState({user: data.find(u=> u.email === email)}))
   }
 
   signupUser = ({email, firstName, lastName, password}) => {
     console.log('in signupUser', email, firstName, lastName, password);
+    fetch(process.env.REACT_APP_USER_URL, {
+      method: 'POST',
+      headers: {"Content-Type": "application/json; charset=utf-8",},
+      body: JSON.stringify({
+        user: {
+          email: email,
+          first_name: firstName,
+          last_name: lastName,
+          password: password
+        }
+      })
+    })
+      .then(r=>r.json())
+      .then(data => console.log('signupUser fetch data response',data))
   }
 
   render() {
