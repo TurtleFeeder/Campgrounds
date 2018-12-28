@@ -1,4 +1,5 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
 
 class SignupForm extends React.Component {
@@ -20,13 +21,17 @@ class SignupForm extends React.Component {
   }
 
   render(){
-    return (
+      console.log('in SignupForm', this.props);
+    return this.props.loggedIn ? (
+      <Redirect to="/"/>
+    ):(
       <div className='signup-form'>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
               <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' /> Signup
             </Header>
+            {this.props.createUserErrorMsg ? <Message error header={this.props.createUserErrorMsg}/> : null}
             <Form
               size='large'
               onSubmit={this.handleSignupSubmit}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import SearchContainer from './SearchContainer';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
@@ -8,12 +8,47 @@ import NavBar from '../components/NavBar';
 
 class MainContainer extends Component {
   state = {
-    user: null
+    user: null,
+    loggedIn: false,
+    authenticatingUser: false,
+    failedLogin: false,
+    error: null,
+    createUserErrorMsg: null
   }
 
   loginUser = (email, password) => {
     console.log('in loginUser', email, password);
-    fetch(process.env.REACT_APP_USER_URL).then(r=>r.json()).then(data=> this.setState({user: data.find(u=> u.email === email)}))
+    // fetch(process.env.REACT_APP_USER_URL).then(r=>r.json()).then(data=> this.setState({user: data.find(u=> u.email === email)}))
+    fetch(process.env.REACT_APP_LOGIN_URL, {
+      method: 'POST',
+      headers: {"Content-Type": "application/json; charset=utf-8",},
+      body: JSON.stringify({
+        user: {
+          email: email,
+          password: password
+        }
+      })
+    })
+      .then(resp => {
+        if (resp.ok) {
+          return resp.json()
+        } else {
+          throw resp
+        }
+      })
+      .then(JSONResponse => {
+        console.log('in loginUser JSONResponse',JSONResponse)
+        localStorage.setItem('jwt', JSONResponse.jwt)
+        this.setState({
+          user: JSONResponse.user,
+          loggedIn: true,
+          authenticatingUser: false
+        })
+      })
+      .catch(r => r.json().then(e => {
+        console.log('in loginUser catch', e)
+        this.setState({failedLogin: true, error: e.message, authenticatingUser: false})
+      }))
   }
 
   signupUser = ({email, firstName, lastName, password}) => {
@@ -30,8 +65,26 @@ class MainContainer extends Component {
         }
       })
     })
-      .then(r=>r.json())
-      .then(data => console.log('signupUser fetch data response',data))
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json()
+      } else {
+        throw resp
+      }
+    })
+      .then(JSONResponse => {
+        console.log('in loginUser JSONResponse',JSONResponse)
+        localStorage.setItem('jwt', JSONResponse.jwt)
+        this.setState({
+          user: JSONResponse.user,
+          loggedIn: true,
+          authenticatingUser: false
+        })
+      })
+      .catch(r => r.json().then(e => {
+        console.log('in signupUser catch', e)
+        this.setState({createUserErrorMsg: e.error})
+      }))
   }
 
   render() {
@@ -42,9 +95,22 @@ class MainContainer extends Component {
             <h1>Campgrounds</h1>
             <NavBar />
           </header>
-          <Route exact path="/" component={SearchContainer}/>
-          <Route exact path="/signup" render={routerProps => <SignupForm signupUser={this.signupUser} {...routerProps}/>}/>
-          <Route exact path="/login" render={routerProps => <LoginForm loginUser={this.loginUser} {...routerProps}/>}/>
+          <Switch>
+            <Route exact path="/" component={SearchContainer}/>
+            <Route path="/signup" render={routerProps => <SignupForm
+              signupUser={this.signupUser}
+              loggedIn={this.state.loggedIn}
+              createUserErrorMsg={this.state.createUserErrorMsg}
+              {...routerProps}/>}
+              />
+            <Route path="/login" render={routerProps => <LoginForm loginUser={this.loginUser}
+            loggedIn={this.state.loggedIn}
+            authenticatingUser={this.state.authenticatingUser}
+            failedLogin={this.state.failedLogin}
+            error={this.state.error}
+            {...routerProps}
+             />}/>
+          </Switch>
         </div>
       </Router>
     )

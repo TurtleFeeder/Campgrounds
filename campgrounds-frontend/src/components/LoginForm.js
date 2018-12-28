@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react';
 
 class LoginForm extends React.Component {
@@ -20,13 +20,16 @@ class LoginForm extends React.Component {
 
   render(){
     console.log('in LoginForm', this.props);
-    return (
+    return this.props.loggedIn ? (
+      <Redirect to="/"/>
+    ):(
       <div className='login-form'>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
             <Header as='h2' color='teal' textAlign='center'>
               <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' /> Log-in to your account
             </Header>
+            {this.props.failedLogin ? <Message error header={this.props.error}/> : null}
             <Form
               size='large'
               onSubmit={this.handleLoginSubmit}
