@@ -1,4 +1,6 @@
 class Api::V1::FacilitiesController < ApplicationController
+  skip_before_action :authorized
+
   def index
     # be able to pass in stateInitials into the getFacilities method and get only facilities for that state
     facilities = ApiService.getFacilities
