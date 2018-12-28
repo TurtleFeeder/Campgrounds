@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 20vh;
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,11 +75,21 @@
   align-items: center;
   align-content: center;
   position: relative;
-  padding-bottom: 15px;
-  padding-top: 15px;
+  padding-bottom: 5vh;
+  padding-top: 5vh;
 }
 
 /* FacilityCard */
 .facility-card {
   height: 30vw;
+}
+
+/* LoginForm */
+.login-form {
+  padding-top: 5vh;
+}
+
+/* SignupForm */
+.signup-form {
+  padding-top: 5vh;
 }
