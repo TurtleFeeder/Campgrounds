@@ -82,6 +82,7 @@
 /* FacilityCard */
 .facility-card {
   height: 30vw;
+  position: relative;
 }
 
 /* LoginForm */
@@ -91,5 +92,16 @@
 
 /* SignupForm */
 .signup-form {
+  padding-top: 5vh;
+}
+
+.reservation-button {
+  position: absolute;
+  top: 30vh;
+  right: 5vh;
+}
+
+/* ReservationForm */
+.reservation-form {
   padding-top: 5vh;
 }

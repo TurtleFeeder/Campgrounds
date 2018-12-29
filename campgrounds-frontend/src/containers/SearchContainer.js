@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SearchForm from '../components/SearchForm';
 import Results from './Results';
 
+
+
 class SearchContainer extends Component {
   state = {
     facilities: null,
@@ -9,9 +11,7 @@ class SearchContainer extends Component {
     selectedStateAbbr: null
   }
 
-  // move the fetch logic here - add logic to only display Results if there's facilities in the state - after the search submission causes the state to be updated, then the results should show up with the updated state.
   componentDidMount() {
-    // fetch(process.env.REACT_APP_FACILITIES_URL).then(r=>r.json()).then(data => this.setState({facilities: data},()=>console.log('in SearchContainer componentDidMount after facilities fetch',this.state)))
     fetch(process.env.REACT_APP_STATES_URL).then(r=>r.json()).then(data => this.setState({searchStates: data},()=>console.log('in SearchContainer componentDidMount after states fetch',this.state)))
   }
 
@@ -49,8 +49,3 @@ class SearchContainer extends Component {
 }
 
 export default SearchContainer;
-
-// <Results
-// facilities={this.state.facilities}
-// searchStates={this.state.searchStates}
-// />

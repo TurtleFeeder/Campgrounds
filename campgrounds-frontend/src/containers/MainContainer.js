@@ -4,7 +4,7 @@ import SearchContainer from './SearchContainer';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import NavBar from '../components/NavBar';
-
+import ReservationForm from '../components/ReservationForm';
 
 class MainContainer extends Component {
   state = {
@@ -110,6 +110,7 @@ class MainContainer extends Component {
             error={this.state.error}
             {...routerProps}
              />}/>
+            <Route path="/reservation" render={routerProps => <ReservationForm {...routerProps}/>}/>
           </Switch>
         </div>
       </Router>
