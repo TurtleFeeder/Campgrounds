@@ -25,8 +25,7 @@ class MainContainer extends Component {
   }
 
   loginUser = (email, password) => {
-    console.log('in loginUser', email, password);
-    // fetch(process.env.REACT_APP_USER_URL).then(r=>r.json()).then(data=> this.setState({user: data.find(u=> u.email === email)}))
+
     fetch(process.env.REACT_APP_LOGIN_URL, {
       method: 'POST',
       headers: {"Content-Type": "application/json; charset=utf-8",},
@@ -60,6 +59,19 @@ class MainContainer extends Component {
         console.log('in loginUser catch', e)
         this.setState({failedLogin: true, error: e.message, authenticatingUser: false})
       }))
+  }
+
+  logoutUser = () => {
+    // clear user token from localStorage
+    localStorage.removeItem('jwt')
+    this.setState({
+      user: null,
+      loggedIn: false,
+      authenticatingUser: false,
+      failedLogin: false,
+      error: null,
+      createUserErrorMsg: null
+    })
   }
 
   signupUser = ({email, firstName, lastName, password}) => {
@@ -125,7 +137,10 @@ class MainContainer extends Component {
         <div id="MainContainer">
           <header className="App-header">
             <h1>Campgrounds</h1>
-            <NavBar />
+            <NavBar
+            loggedIn={this.state.loggedIn}
+            logoutUser={this.logoutUser}
+            />
           </header>
           <Switch>
             <Route exact path="/" render={routerProps=> <SearchContainer
