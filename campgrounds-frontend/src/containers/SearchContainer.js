@@ -15,6 +15,14 @@ class SearchContainer extends Component {
     fetch(process.env.REACT_APP_STATES_URL).then(r=>r.json()).then(data => this.setState({searchStates: data},()=>console.log('in SearchContainer componentDidMount after states fetch',this.state)))
   }
 
+  componentDidUpdate() {
+    console.log('in SearchContainer componentDidUpdate props', this.props);
+    console.log('in SearchContainer componentDidUpdate jwt token', localStorage.getItem('jwt'));
+    if (localStorage.getItem('jwt') && this.props.loggedIn === false) {
+      this.props.getUser()
+    }
+  }
+
   handleSubmit = (result) => {
     fetch(process.env.REACT_APP_FACILITIES_URL, {
       method: "POST",
@@ -39,6 +47,7 @@ class SearchContainer extends Component {
             facilities={this.state.facilities}
             searchStates={this.state.searchStates}
             selectedStateAbbr={this.state.selectedStateAbbr}
+            loggedIn={this.props.loggedIn}
           />
            :
            null

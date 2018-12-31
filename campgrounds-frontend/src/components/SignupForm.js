@@ -17,7 +17,7 @@ class SignupForm extends React.Component {
   handleSignupSubmit = (e) => {
     console.log('in handleSignupSubmit');
     this.props.signupUser(this.state)
-    this.setState({email: '', password: '', firstName: '', lastName: ''})
+    this.setState({email: '', password: '', firstName: '', lastName: ''}, ()=> this.props.history.push('/'))
   }
 
   render(){

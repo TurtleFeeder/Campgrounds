@@ -9,13 +9,14 @@ class Results extends Component {
   }
 
   render() {
+    console.log('in Results render props', this.props);
     return (
       <div id="Results" className="flex-grid">
           <div id="Map" className="col-left">
             <Map facilities={this.props.facilities} selectedState={this.selectedStateObj()}/>
           </div>
           <div id="Facilities-Container" className="col-right facility-container-style">
-            {this.props.facilities.map(f=> <FacilityCard  key={f.FacilityID} facility={f}/>)}
+            {this.props.facilities.map(f=> <FacilityCard  key={f.FacilityID} facility={f} loggedIn={this.props.loggedIn} />)}
           </div>
       </div>
     );

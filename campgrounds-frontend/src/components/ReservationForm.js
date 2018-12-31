@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Segment, Button, Grid, Header } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import withAuth from '../hocs/withAuth';
 
 class ReservationForm extends React.Component {
   state = {
@@ -10,27 +11,11 @@ class ReservationForm extends React.Component {
     selectedActivities: []
   }
 
-  // componentDidMount() {
-  //   console.log('in ReservationForm componentDidMount this.props', this.props);
-  //   if (!!this.props.location.state.facility) {
-  //     this.setState({facility: this.props.location.state.facility}, ()=> console.log('in ReservationForm after componentDidMount setState', this.state))
-  //   }
-  // }
-  //
-  // componentDidUpdate(prevProps, prevState) {
-  //   // conditional is not preventing infinite loop
-  //   if (prevProps.location.state.facility.FacilityID === this.props.location.state.facility.FacilityID) {
-  //     this.setState({facility: null})
-  //   } else if (this.state.facility !== null && (prevProps.location.state.facility.FacilityID !== this.props.location.state.facility.FacilityID)) {
-  //     this.setState({facility: this.props.location.state.facility.FacilityID})
-  //   }
-  // }
-
   handleChangeStart = (date) => {
    this.setState({
      startDate: date
    }, ()=> console.log('in ReservationForm handleChangeStart', this.state));
- }
+  }
 
  handleChangeEnd = (date) => {
    this.setState({
@@ -52,8 +37,14 @@ class ReservationForm extends React.Component {
  handleReservationSubmit = (e) => {
    console.log('in handleReservationSubmit', e)
    console.log('in handleReservationSubmit the state', this.state)
-   // debugger
+   console.log('in handleReservationSubmit the props', this.props)
+
    // create reservation table and activities table in backend - then post to backend to persist reservation data
+
+   // create fetch to post to backend
+   // reset reservation form's state to default
+   // then redirect to search pg since there's no profile pg yet
+   // add this.props.history.push('/') in a callback after the setState to reset the reservation form's state
  }
 
  renderForm = (facility) => {
@@ -110,4 +101,4 @@ class ReservationForm extends React.Component {
 
 } // end ReservationForm
 
-export default ReservationForm;
+export default withAuth(ReservationForm);

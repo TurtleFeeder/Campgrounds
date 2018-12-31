@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import SearchContainer from './SearchContainer';
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import NavBar from '../components/NavBar';
 import ReservationForm from '../components/ReservationForm';
+import withAuth from '../hocs/withAuth';
 
 class MainContainer extends Component {
   state = {
@@ -14,6 +15,13 @@ class MainContainer extends Component {
     failedLogin: false,
     error: null,
     createUserErrorMsg: null
+  }
+
+  componentDidUpdate() {
+    console.log('in MainContainer componentDidUpdate state', this.state);
+    // if (localStorage.getItem('jwt') && this.state.loggedIn === false) {
+    //   this.getUser()
+    // }
   }
 
   loginUser = (email, password) => {
@@ -42,7 +50,10 @@ class MainContainer extends Component {
         this.setState({
           user: JSONResponse.user,
           loggedIn: true,
-          authenticatingUser: false
+          authenticatingUser: false,
+          failedLogin: false,
+          error: null,
+          createUserErrorMsg: null
         })
       })
       .catch(r => r.json().then(e => {
@@ -78,12 +89,33 @@ class MainContainer extends Component {
         this.setState({
           user: JSONResponse.user,
           loggedIn: true,
-          authenticatingUser: false
+          authenticatingUser: false,
+          failedLogin: false,
+          error: null,
+          createUserErrorMsg: null
         })
       })
       .catch(r => r.json().then(e => {
         console.log('in signupUser catch', e)
         this.setState({createUserErrorMsg: e.error})
+      }))
+  }
+
+  getUser = () => {
+      fetch(process.env.REACT_APP_USER_PROFILE_URL, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`
+        }
+      })
+      .then(r => r.json())
+      .then(JSONResponse => this.setState({
+        user: JSONResponse.user,
+        loggedIn: true,
+        authenticatingUser: false,
+        failedLogin: false,
+        error: null,
+        createUserErrorMsg: null
       }))
   }
 
@@ -96,7 +128,10 @@ class MainContainer extends Component {
             <NavBar />
           </header>
           <Switch>
-            <Route exact path="/" component={SearchContainer}/>
+            <Route exact path="/" render={routerProps=> <SearchContainer
+              loggedIn={this.state.loggedIn}
+              getUser={this.getUser}
+              {...routerProps}/>}/>
             <Route path="/signup" render={routerProps => <SignupForm
               signupUser={this.signupUser}
               loggedIn={this.state.loggedIn}
@@ -110,7 +145,11 @@ class MainContainer extends Component {
             error={this.state.error}
             {...routerProps}
              />}/>
-            <Route path="/reservation" render={routerProps => <ReservationForm {...routerProps}/>}/>
+             <Route path="/reservation" render={routerProps=> <ReservationForm
+               getUser={this.getUser}
+               loggedIn={this.state.loggedIn}
+               user={this.state.user}
+               {...routerProps}/>}/>
           </Switch>
         </div>
       </Router>
@@ -118,5 +157,14 @@ class MainContainer extends Component {
   }
 
 } // end MainContainer
+
+// <Route path="/reservation" render={routerProps => (
+  //   localStorage.getItem('jwt') ?
+  //   (this.getUser(routerProps))
+  //   :
+  //   (<Redirect to="/login"/>)
+  // )}/>
+
+// <Route path="/reservation" render={routerProps => <ReservationForm loggedIn={this.state.loggedIn} {...routerProps}/>}/>
 
 export default MainContainer;

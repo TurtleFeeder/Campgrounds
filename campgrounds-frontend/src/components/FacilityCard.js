@@ -46,6 +46,7 @@ export default function FacilityCard({facility}) {
       <h4>{facility.FacilityName}</h4>
       <h5>{facility.RECAREA.length >= 1 ? `Part of ${facility.RECAREA[0]['RecAreaName']}` : null}</h5>
       <h6>{checkAddress(facility.FACILITYADDRESS)}</h6>
+      <p>Number of Activities Available: {facility.ACTIVITY.length}</p>
       <p>{parseDescription(facility.FacilityDescription)}</p>
     </div>
   )
