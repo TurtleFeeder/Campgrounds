@@ -23,11 +23,18 @@ const NavBar = ({loggedIn, logoutUser}) => {
           </Button>
         </NavLink>
         {loggedIn ? (
-          <NavLink to="/login">
-            <Button size='small' onClick={logoutUser}>
-              <Button.Content visible>Logout</Button.Content>
-            </Button>
-          </NavLink>
+          <React.Fragment>
+            <NavLink to="/profile">
+              <Button size='small'>
+                <Button.Content visible>Profile</Button.Content>
+              </Button>
+            </NavLink>
+            <NavLink to="/login">
+              <Button size='small' onClick={logoutUser}>
+                <Button.Content visible>Logout</Button.Content>
+              </Button>
+            </NavLink>
+          </React.Fragment>
         ):(
           <React.Fragment>
             <NavLink to="/login">

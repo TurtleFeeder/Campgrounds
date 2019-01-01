@@ -5,6 +5,7 @@ import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import NavBar from '../components/NavBar';
 import ReservationForm from '../components/ReservationForm';
+import Profile from '../components/Profile';
 import withAuth from '../hocs/withAuth';
 
 class MainContainer extends Component {
@@ -131,6 +132,12 @@ class MainContainer extends Component {
       }))
   }
 
+  updateUser = (newReservation) => {
+    console.log('%c in updateUser newReservation', 'color: red', newReservation)
+    console.log('%c in updateUser state', 'color: red', this.state)
+    this.setState(prevState => ({user: {...prevState.user, reservations: [...prevState.user.reservations, newReservation]}}))
+  }
+
   render() {
     return (
       <Router>
@@ -161,6 +168,12 @@ class MainContainer extends Component {
             {...routerProps}
              />}/>
              <Route path="/reservation" render={routerProps=> <ReservationForm
+               getUser={this.getUser}
+               updateUser={this.updateUser}
+               loggedIn={this.state.loggedIn}
+               user={this.state.user}
+               {...routerProps}/>}/>
+             <Route path="/profile" render={routerProps=> <Profile
                getUser={this.getUser}
                loggedIn={this.state.loggedIn}
                user={this.state.user}

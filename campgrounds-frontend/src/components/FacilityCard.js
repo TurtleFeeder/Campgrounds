@@ -28,8 +28,9 @@ function getImageUrl(array) {
 export default function FacilityCard({facility}) {
   const newTo = {
     pathname: "/reservation",
-    state: {facility}
+    state: {facility: {...facility, FacilityImg: getImageUrl(facility.MEDIA)}}
   }
+  console.log('in FacilityCard newTo', newTo);
   return (
     <div id={facility.FacilityID} className="border-shadow facility-card">
     <img src={getImageUrl(facility.MEDIA)} width={200} height={200} />
