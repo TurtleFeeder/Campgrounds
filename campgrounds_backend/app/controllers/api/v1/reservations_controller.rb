@@ -21,10 +21,20 @@ class Api::V1::ReservationsController < ApplicationController
     end # end @reservation.valid? if stmt
   end # end create
 
+  def destroy
+    reservation = Reservation.find(reservation_params['id'])
+    @deleted_reservation = reservation.destroy
+    if !!@deleted_reservation
+      render json: @deleted_reservation, status: :ok
+    else
+      render json: {error: 'Failed to delete reservation'}, status: :not_acceptable
+    end
+  end
+
   private
 
   def reservation_params
-    params.require(:reservation).permit(:user_id, :facility_id, :start_dt, :end_dt, :facility_name, :facility_img, :activities => [])
+    params.require(:reservation).permit(:id, :user_id, :facility_id, :start_dt, :end_dt, :facility_name, :facility_img, :activities => [])
   end
 
 end # end ReservationsController

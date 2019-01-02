@@ -30,10 +30,9 @@ export default function FacilityCard({facility}) {
     pathname: "/reservation",
     state: {facility: {...facility, FacilityImg: getImageUrl(facility.MEDIA)}}
   }
-  console.log('in FacilityCard newTo', newTo);
   return (
     <div id={facility.FacilityID} className="border-shadow facility-card">
-    <img src={getImageUrl(facility.MEDIA)} width={200} height={200} />
+    <img src={getImageUrl(facility.MEDIA)} width={200} height={200} alt={facility.FacilityName}/>
     <Link to={newTo}>
       <Button as='div' labelPosition='right' className="reservation-button" size='large'>
         <Button icon>

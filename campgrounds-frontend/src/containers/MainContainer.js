@@ -18,13 +18,6 @@ class MainContainer extends Component {
     createUserErrorMsg: null
   }
 
-  componentDidUpdate() {
-    console.log('in MainContainer componentDidUpdate state', this.state);
-    // if (localStorage.getItem('jwt') && this.state.loggedIn === false) {
-    //   this.getUser()
-    // }
-  }
-
   loginUser = (email, password) => {
 
     fetch(process.env.REACT_APP_LOGIN_URL, {
@@ -76,7 +69,7 @@ class MainContainer extends Component {
   }
 
   signupUser = ({email, firstName, lastName, password}) => {
-    console.log('in signupUser', email, firstName, lastName, password);
+
     fetch(process.env.REACT_APP_USER_URL, {
       method: 'POST',
       headers: {"Content-Type": "application/json; charset=utf-8",},
@@ -132,10 +125,17 @@ class MainContainer extends Component {
       }))
   }
 
-  updateUser = (newReservation) => {
-    console.log('%c in updateUser newReservation', 'color: red', newReservation)
+  updateUser = (reservationJSON, action) => {
+    console.log('%c in updateUser reservationJSON', 'color: red', reservationJSON)
     console.log('%c in updateUser state', 'color: red', this.state)
-    this.setState(prevState => ({user: {...prevState.user, reservations: [...prevState.user.reservations, newReservation]}}))
+    switch (action) {
+      case 'addReservation':
+        this.setState(prevState => ({user: {...prevState.user, reservations: [...prevState.user.reservations, reservationJSON]}}))
+        break;
+        case 'deleteReservation':
+        this.setState(prevState => ({user: {...prevState.user, reservations: prevState.user.reservations.filter(r=> r.id !== reservationJSON.id)}}))
+        break;
+    }
   }
 
   render() {
@@ -175,6 +175,7 @@ class MainContainer extends Component {
                {...routerProps}/>}/>
              <Route path="/profile" render={routerProps=> <Profile
                getUser={this.getUser}
+               updateUser={this.updateUser}
                loggedIn={this.state.loggedIn}
                user={this.state.user}
                {...routerProps}/>}/>

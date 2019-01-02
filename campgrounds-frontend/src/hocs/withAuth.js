@@ -2,15 +2,12 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 const withAuth = (WrappedComponent) => {
-  console.log('in withAuth', WrappedComponent);
+  console.log('%c in withAuth', 'color: orange', WrappedComponent);
   class AuthorizedComponent extends React.Component {
     componentDidMount() {
-      console.log('in withAuth WrappedComponent', WrappedComponent)
-      console.log('in withAuth WrappedComponent props', this.props)
+      console.log('%c in withAuth WrappedComponent', 'color: orange', WrappedComponent)
+      console.log('%c in withAuth WrappedComponent props', 'color: orange', this.props)
       if (localStorage.getItem('jwt') && this.props.loggedIn === false) {
-        console.log('in withAuth AuthorizedComponent componentDidMount props', this.props)
-        console.log('in withAuth AuthorizedComponent componentDidMount props', localStorage.getItem('jwt'))
-
         this.props.getUser()
       }
     }
@@ -35,7 +32,6 @@ const withAuth = (WrappedComponent) => {
     }
 
     render() {
-      console.log('%c INSIDE RENDER FOR HOC', 'color: green')
       console.log('%c INSIDE RENDER FOR HOC the props', 'color: green', this.props)
 
       if (localStorage.getItem('jwt') && this.props.loggedIn) {

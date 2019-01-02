@@ -15,20 +15,18 @@ class SignupForm extends React.Component {
   }
 
   handleSignupSubmit = (e) => {
-    console.log('in handleSignupSubmit');
     this.props.signupUser(this.state)
     this.setState({email: '', password: '', firstName: '', lastName: ''})
   }
 
   render(){
-      console.log('in SignupForm', this.props);
     return this.props.loggedIn ? (
       <Redirect to="/"/>
     ):(
       <div className='signup-form'>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>
+            <Header as='h2' color='violet' textAlign='center'>
               <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' /> Signup
             </Header>
             {this.props.createUserErrorMsg ? <Message error header={this.props.createUserErrorMsg}/> : null}
@@ -39,7 +37,7 @@ class SignupForm extends React.Component {
               <Segment stacked>
                 <Form.Input
                   fluid
-                  fluid icon='user'
+                  icon='user'
                   iconPosition='left'
                   placeholder='First Name'
                   type='text'
@@ -49,7 +47,7 @@ class SignupForm extends React.Component {
                 />
                 <Form.Input
                   fluid
-                  fluid icon='user'
+                  icon='user'
                   iconPosition='left'
                   placeholder='Last Name'
                   type='text'
@@ -76,7 +74,7 @@ class SignupForm extends React.Component {
                   onChange={this.handleChange}
                 />
 
-                <Button color='teal' fluid size='large' type='submit'>
+                <Button color='violet' fluid size='large' type='submit'>
                   Signup
                 </Button>
               </Segment>

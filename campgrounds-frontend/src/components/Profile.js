@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Grid, Card, Image } from 'semantic-ui-react';
+import { Header, Card, Image, Button, Icon } from 'semantic-ui-react';
 import withAuth from '../hocs/withAuth';
 
 const formatDate = (strDate) => {
@@ -14,8 +14,24 @@ const formatDate = (strDate) => {
 class Profile extends React.Component {
 
 
+  handleDeleteClick = (id) => {
+    
+    fetch(`${process.env.REACT_APP_RESERVATION_URL}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify({reservation: {id}})
+    })
+      .then(r => r.json())
+      .then(JSONResponse => {
+        console.log('%c in handleDeleteClick fetch response JSONResponse', 'color: green', JSONResponse)
+        this.props.updateUser(JSONResponse, 'deleteReservation')
+      })
+  }
+
   render() {
-    console.log('in Profile render reservations', this.props.user.reservations);
     return (
       <div className='user-profile'>
         <Header as='h1' color='violet' textAlign='center'>Reservations for {this.props.user.full_name}</Header>
@@ -39,6 +55,12 @@ class Profile extends React.Component {
                 <Card.Group itemsPerRow={2}>
                   {reservation.activities.map(a => <Card key={a}>{a}</Card>)}
                 </Card.Group>
+              </Card.Content>
+              <Card.Content extra>
+                <Button animated='vertical' basic color='red' onClick={()=>this.handleDeleteClick(reservation.id)}>
+                  <Button.Content hidden>Delete</Button.Content>
+                  <Button.Content visible><Icon name='delete' size='large'/></Button.Content>
+                </Button>
               </Card.Content>
             </Card>
           ))}

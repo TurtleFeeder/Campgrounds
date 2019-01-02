@@ -15,17 +15,17 @@ class ReservationForm extends React.Component {
   handleChangeStart = (date) => {
    this.setState({
      startDate: date
-   }, ()=> console.log('in ReservationForm handleChangeStart', this.state));
+   });
   }
 
  handleChangeEnd = (date) => {
    this.setState({
      endDate: date
-   }, () => console.log('in ReservationForm handleChangeEnd', this.state));
+   });
  }
 
  handleCheckbox = (a) => {
-   console.log('in handleCheckbox', a)
+
    this.setState(prevState => {
      if (prevState.selectedActivities.includes(a.ActivityName)) {
        return {selectedActivities: prevState.selectedActivities.filter(actName => actName !== a.ActivityName)}
@@ -36,11 +36,7 @@ class ReservationForm extends React.Component {
  }
 
  handleReservationSubmit = (e) => {
-   console.log('in handleReservationSubmit', e)
-   console.log('in handleReservationSubmit the state', this.state)
-   console.log('in handleReservationSubmit the props', this.props)
 
-   // create reservation table and activities table in backend - then post to backend to persist reservation data
    const data = JSON.stringify({
      reservation: {
        user_id: this.props.user.id,
@@ -53,9 +49,9 @@ class ReservationForm extends React.Component {
      }
    })
 
-   console.log('in handleReservationSubmit JSON stringify data', data);
+   console.log('%c in handleReservationSubmit JSON stringify data', 'color: pink', data);
 
-   // create fetch to post to backend
+   // fetch to post to backend
    fetch(process.env.REACT_APP_RESERVATION_URL, {
      method: 'POST',
      headers: {
@@ -72,9 +68,8 @@ class ReservationForm extends React.Component {
        }
      })
      .then(JSONResponse => {
-       console.log('%c in handleReservationSubmit JSONResponse','color: red',JSONResponse)
-       // if it's successful - yay!
-       this.props.updateUser(JSONResponse)
+       console.log('%c in handleReservationSubmit JSONResponse','color: pink',JSONResponse)
+       this.props.updateUser(JSONResponse, 'addReservation')
        this.setState({
          startDate: null,
          endDate: null,
@@ -83,17 +78,13 @@ class ReservationForm extends React.Component {
        }, ()=> this.props.history.push('/profile'))
      })
      .catch(r => r.json().then(e => {
-       console.log('in handleReservationSubmit catch', e)
+       console.log('%c in handleReservationSubmit catch', 'color: pink', e)
        this.setState({error: e.error})
      }))
-
-   // reset reservation form's state to default
-   // then redirect to search pg since there's no profile pg yet
-   // add this.props.history.push('/') in a callback after the setState to reset the reservation form's state
  }
 
  renderForm = (facility) => {
-   console.log('in renderForm facility', facility);
+   console.log('%c in renderForm facility', 'color: pink', facility);
    if (!!facility) {
      return (
        <React.Fragment>

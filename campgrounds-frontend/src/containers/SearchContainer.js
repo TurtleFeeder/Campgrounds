@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import SearchForm from '../components/SearchForm';
 import Results from './Results';
 
-
-
 class SearchContainer extends Component {
   state = {
     facilities: null,
@@ -12,12 +10,11 @@ class SearchContainer extends Component {
   }
 
   componentDidMount() {
-    fetch(process.env.REACT_APP_STATES_URL).then(r=>r.json()).then(data => this.setState({searchStates: data},()=>console.log('in SearchContainer componentDidMount after states fetch',this.state)))
+    fetch(process.env.REACT_APP_STATES_URL).then(r=>r.json()).then(data => this.setState({searchStates: data},()=>console.log('%c in SearchContainer componentDidMount after states fetch','color: yellow',this.state)))
   }
 
   componentDidUpdate() {
-    console.log('in SearchContainer componentDidUpdate props', this.props);
-    console.log('in SearchContainer componentDidUpdate jwt token', localStorage.getItem('jwt'));
+    console.log('%c in SearchContainer componentDidUpdate props','color: yellow', this.props);
     if (localStorage.getItem('jwt') && this.props.loggedIn === false) {
       this.props.getUser()
     }
@@ -30,7 +27,7 @@ class SearchContainer extends Component {
       body: JSON.stringify(result)
     })
     .then(r=>r.json())
-    .then(data => this.setState({facilities: data, selectedStateAbbr: result.abbrev},()=>console.log('in SearchContainer handleSubmit after facilities fetch',this.state)))
+    .then(data => this.setState({facilities: data, selectedStateAbbr: result.abbrev}))
   }
 
   render() {
