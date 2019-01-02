@@ -4,9 +4,7 @@ import mapboxgl from 'mapbox-gl';
 
 const isElementOnScreen = (facility, container) => {
   const element = document.getElementById(facility.FacilityID);
-  // debugger;
   const bounds = element.getBoundingClientRect();
-  // return Math.round(bounds.top) === container.offsetTop || (bounds.top < container.offsetHeight && bounds.bottom > 0);
   return bounds.top < container.offsetHeight && bounds.bottom > 0;
 }
 
@@ -63,7 +61,7 @@ class Map extends Component {
           map.flyTo({center: stateCenterCoord, zoom: 6, speed: 0.4, curve: 0.9});
         }) // end setState
       }
-    }
+    } // end componentDidUpdate
 
   componentDidMount() {
 
@@ -107,7 +105,7 @@ class Map extends Component {
         }
       }) // end geoData
 
-      console.log('in map.on load filtered geoData',geoData)
+      console.log('%c in map.on load filtered geoData','color: violet',geoData)
 
       map.addSource('facilities', {
         type: 'geojson',
@@ -129,7 +127,7 @@ class Map extends Component {
 
       map.on('click', (e) => {
         const features = map.queryRenderedFeatures(e.point, {'layers': ['facilities']})
-        console.log('in map.on click features', features);
+        console.log('%c in map.on click features', 'color: violet', features);
 
         if (!features.length) {
           return;
@@ -165,7 +163,7 @@ class Map extends Component {
         }
       }
 
-      this.setState({map: map}, ()=> console.log('added map to state in componentDidMount', this.state))
+      this.setState({map: map}, ()=> console.log('%c added map to state in componentDidMount', 'color: violet', this.state))
     }) // end map.on load
 
 

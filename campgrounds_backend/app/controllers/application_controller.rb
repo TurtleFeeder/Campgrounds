@@ -2,6 +2,8 @@ class ApplicationController < ActionController::API
   before_action :authorized
 
   def encode_token(payload)
+    # try implementing token expiration once i get a page that requires auth to access
+    # payload[:expire] = (2).minutes.from_now.to_i # expires in 2 min
     JWT.encode(payload, ENV['TOKEN_SECRET'])
   end
 

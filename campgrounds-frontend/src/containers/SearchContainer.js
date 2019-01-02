@@ -9,10 +9,15 @@ class SearchContainer extends Component {
     selectedStateAbbr: null
   }
 
-  // move the fetch logic here - add logic to only display Results if there's facilities in the state - after the search submission causes the state to be updated, then the results should show up with the updated state.
   componentDidMount() {
-    // fetch(process.env.REACT_APP_FACILITIES_URL).then(r=>r.json()).then(data => this.setState({facilities: data},()=>console.log('in SearchContainer componentDidMount after facilities fetch',this.state)))
-    fetch(process.env.REACT_APP_STATES_URL).then(r=>r.json()).then(data => this.setState({searchStates: data},()=>console.log('in SearchContainer componentDidMount after states fetch',this.state)))
+    fetch(process.env.REACT_APP_STATES_URL).then(r=>r.json()).then(data => this.setState({searchStates: data},()=>console.log('%c in SearchContainer componentDidMount after states fetch','color: yellow',this.state)))
+  }
+
+  componentDidUpdate() {
+    console.log('%c in SearchContainer componentDidUpdate props','color: yellow', this.props);
+    if (localStorage.getItem('jwt') && this.props.loggedIn === false) {
+      this.props.getUser()
+    }
   }
 
   handleSubmit = (result) => {
@@ -22,7 +27,7 @@ class SearchContainer extends Component {
       body: JSON.stringify(result)
     })
     .then(r=>r.json())
-    .then(data => this.setState({facilities: data, selectedStateAbbr: result.abbrev},()=>console.log('in SearchContainer handleSubmit after facilities fetch',this.state)))
+    .then(data => this.setState({facilities: data, selectedStateAbbr: result.abbrev}))
   }
 
   render() {
@@ -39,6 +44,7 @@ class SearchContainer extends Component {
             facilities={this.state.facilities}
             searchStates={this.state.searchStates}
             selectedStateAbbr={this.state.selectedStateAbbr}
+            loggedIn={this.props.loggedIn}
           />
            :
            null
@@ -49,8 +55,3 @@ class SearchContainer extends Component {
 }
 
 export default SearchContainer;
-
-// <Results
-// facilities={this.state.facilities}
-// searchStates={this.state.searchStates}
-// />

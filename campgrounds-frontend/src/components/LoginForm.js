@@ -13,20 +13,18 @@ class LoginForm extends React.Component {
   }
 
   handleLoginSubmit = (e) => {
-    console.log('in handleLoginSubmit');
     this.props.loginUser(this.state.email, this.state.password)
     this.setState({email: '', password: ''})
   }
 
   render(){
-    console.log('in LoginForm', this.props);
     return this.props.loggedIn ? (
       <Redirect to="/"/>
     ):(
       <div className='login-form'>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='teal' textAlign='center'>
+            <Header as='h2' color='violet' textAlign='center'>
               <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' /> Log-in to your account
             </Header>
             {this.props.failedLogin ? <Message error header={this.props.error}/> : null}
@@ -54,7 +52,7 @@ class LoginForm extends React.Component {
                   onChange={this.handleChange}
                 />
 
-                <Button color='teal' fluid size='large' type='submit'>
+                <Button color='violet' fluid size='large' type='submit'>
                   Login
                 </Button>
               </Segment>
