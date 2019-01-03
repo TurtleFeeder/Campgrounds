@@ -109,8 +109,9 @@
 
 .loader-child {
   height: 10vh;
-  width: 100vh;
+  width: 10vh;
   position: relative;
+  color: white;
 }
 
 /* FacilityCard */

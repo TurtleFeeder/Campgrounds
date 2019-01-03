@@ -48,9 +48,7 @@ class SearchContainer extends Component {
         {this.state.isLoading ?
           <div className="loader-parent">
             <div className="loader-child">
-              <Dimmer as={'div'} active inverted>
-                <Loader size={'large'} content={'Searching for campground'}/>
-              </Dimmer>
+                <Loader active size={'big'} content={'Searching for campground'} inverted/>
             </div>
           </div>
           :
