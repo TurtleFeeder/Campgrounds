@@ -7,6 +7,7 @@ import NavBar from '../components/NavBar';
 import ReservationForm from '../components/ReservationForm';
 import Profile from '../components/Profile';
 import withAuth from '../hocs/withAuth';
+import {Image, Segment} from 'semantic-ui-react';
 
 class MainContainer extends Component {
   state = {
@@ -108,6 +109,7 @@ class MainContainer extends Component {
   }
 
   getUser = () => {
+
       fetch(process.env.REACT_APP_USER_PROFILE_URL, {
         method: 'GET',
         headers: {
@@ -141,9 +143,12 @@ class MainContainer extends Component {
   render() {
     return (
       <Router>
-        <div id="MainContainer">
+        <div id="MainContainer" className="main-background">
           <header className="App-header">
-            <h1>Campgrounds</h1>
+            <div style={{height: '7vh'}}>
+              <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' style={{height: '10vh', width: '10vh', display:'inline-block'}} />
+              <div style={{display:'inline-block'}}>Campgrounds</div>
+            </div>
             <NavBar
             loggedIn={this.state.loggedIn}
             logoutUser={this.logoutUser}
@@ -186,14 +191,5 @@ class MainContainer extends Component {
   }
 
 } // end MainContainer
-
-// <Route path="/reservation" render={routerProps => (
-  //   localStorage.getItem('jwt') ?
-  //   (this.getUser(routerProps))
-  //   :
-  //   (<Redirect to="/login"/>)
-  // )}/>
-
-// <Route path="/reservation" render={routerProps => <ReservationForm loggedIn={this.state.loggedIn} {...routerProps}/>}/>
 
 export default MainContainer;

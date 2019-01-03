@@ -88,33 +88,33 @@ class ReservationForm extends React.Component {
    if (!!facility) {
      return (
        <React.Fragment>
-         <Header as='h1' color='teal' textAlign='center'>Make a reservation for {facility.FacilityName}</Header>
          {this.state.error ? <Message error header={this.state.error}/> : null}
          <Form onSubmit={this.handleReservationSubmit}>
            <Segment stacked style={{ maxWidth: 800, margin: 'auto' }}>
-             <DatePicker
+             <Header as='h1' color='violet' textAlign='center'>Make a reservation for {facility.FacilityName}</Header>
+               <DatePicker
                placeholderText="Check-in"
                selected={this.state.startDate}
                selectsStart
                startDate={this.state.startDate}
                endDate={this.state.endDate}
                onChange={this.handleChangeStart}
-             />
-             <DatePicker
+               />
+               <DatePicker
                placeholderText="Check-out"
                selected={this.state.endDate}
                selectsEnd
                startDate={this.state.startDate}
                endDate={this.state.endDate}
                onChange={this.handleChangeEnd}
-             />
+               />
              <Segment>
-               <Header as='h3'color='teal' textAlign='center'>Activities</Header>
+               <Header as='h3'color='violet' textAlign='center'>Activities</Header>
                <Grid columns={3}>
                  {this.props.location.state.facility.ACTIVITY.map(a=> <Grid.Column key={a.ActivityName}><Form.Checkbox key={a.ActivityName} label={a.ActivityName} onChange={()=>this.handleCheckbox(a)}/></Grid.Column>)}
                </Grid>
              </Segment>
-             <Button color='teal' fluid size='large' type='submit'>
+             <Button color='violet' fluid size='large' type='submit'>
              Submit Reservation
              </Button>
            </Segment>

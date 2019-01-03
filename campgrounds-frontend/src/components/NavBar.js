@@ -15,7 +15,7 @@ const activeLink = {background: 'darkblue'}
 const NavBar = ({loggedIn, logoutUser}) => {
   return (
     <div>
-      <Button.Group>
+      <Button.Group color={'grey'}>
         <NavLink to="/">
           <Button animated='vertical' size='small'>
             <Button.Content hidden>Search</Button.Content>

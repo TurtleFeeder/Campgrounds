@@ -1,5 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+import {Loader} from 'semantic-ui-react';
 
 const withAuth = (WrappedComponent) => {
   console.log('%c in withAuth', 'color: orange', WrappedComponent);
@@ -12,24 +13,6 @@ const withAuth = (WrappedComponent) => {
       }
     }
 
-    // using getUser fn passed from MainContainer instead of fetchCurrentUser
-    fetchCurrentUser = () => {
-      fetch(process.env.REACT_APP_USER_PROFILE_URL, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('jwt')}`
-        }
-      })
-        .then(r => r.json())
-        .then(JSONResponse => this.setState({
-          user: JSONResponse.user,
-          loggedIn: true,
-          authenticatingUser: false,
-          failedLogin: false,
-          error: null,
-          createUserErrorMsg: null
-        }))
-    }
 
     render() {
       console.log('%c INSIDE RENDER FOR HOC the props', 'color: green', this.props)

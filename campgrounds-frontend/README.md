@@ -45,5 +45,8 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 
 ## Credits
-1. camera icon
-<!-- <div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div> -->
+1. camera icon used as default image for campgrounds:
+https://www.freepik.com/ from https://www.flaticon.com/ licensed by http://creativecommons.org/licenses/by/3.0/
+
+2. background trees image:
+https://newmobilephonephotos.blogspot.com/2018/07/green-tree-hd-background-pictures.html

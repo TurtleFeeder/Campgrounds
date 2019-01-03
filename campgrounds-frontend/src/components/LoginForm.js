@@ -24,15 +24,15 @@ class LoginForm extends React.Component {
       <div className='login-form'>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='violet' textAlign='center'>
-              <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' /> Log-in to your account
-            </Header>
             {this.props.failedLogin ? <Message error header={this.props.error}/> : null}
             <Form
               size='large'
               onSubmit={this.handleLoginSubmit}
             >
               <Segment stacked>
+                <Header as='h2' color='violet' textAlign='center'>
+                <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' size='mini'/> Log-in to your account
+                </Header>
                 <Form.Input
                 fluid icon='user'
                 iconPosition='left'
