@@ -153,12 +153,14 @@ class Map extends Component {
       })
 
       const container = document.getElementById("Facilities-Container")
-      container.onscroll = () => {
-        const facilities = this.props.facilities.filter(f => f.GEOJSON.COORDINATES !== null)
-        for (var i = 0; i < facilities.length; i++) {
-          let feat = facilities[i];
-          if (isElementOnScreen(feat, container)) {
-            this.setState({facilityInViewId: feat.FacilityID}, () => setActiveFeature(feat, this.state.facilityInViewId, map))
+      if (!!container) {
+        container.onscroll = () => {
+          const facilities = this.props.facilities.filter(f => f.GEOJSON.COORDINATES !== null)
+          for (var i = 0; i < facilities.length; i++) {
+            let feat = facilities[i];
+            if (isElementOnScreen(feat, container)) {
+              this.setState({facilityInViewId: feat.FacilityID}, () => setActiveFeature(feat, this.state.facilityInViewId, map))
+            }
           }
         }
       }

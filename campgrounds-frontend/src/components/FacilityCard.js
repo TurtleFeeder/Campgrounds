@@ -31,23 +31,47 @@ export default function FacilityCard({facility}) {
     state: {facility: {...facility, FacilityImg: getImageUrl(facility.MEDIA)}}
   }
   return (
-    <Card id={facility.FacilityID} className="border-shadow facility-card">
-    <Image src={getImageUrl(facility.MEDIA)} size='small' centered/>
-    <Link to={newTo}>
-      <Button as='div' labelPosition='right' className="reservation-button" size='large'>
-        <Button icon>
-          <Icon name='calendar check' />
+    <Card raised id={facility.FacilityID} className="facility-card" style={{backgroundColor:'rgba(118,118,118,0.8)'}}>
+    <Card.Content>
+      <Image src={getImageUrl(facility.MEDIA)} style={{paddingLeft: '1vh', paddingRight: '3vh', height: '20vh', width: '25vh'}}/>
+      <Link to={newTo}>
+        <Button as='div' labelPosition='right' size='large'>
+          <Button icon>
+            <Icon name='calendar check' />
+          </Button>
+          <Label basic pointing='left' style={{backgroundColor:'rgba(118,118,118,0.6)', color: 'white'}}>
+            Reserve
+          </Label>
         </Button>
-        <Label basic pointing='left'>
-          Reserve
-        </Label>
-      </Button>
-    </Link>
+      </Link>
+    </Card.Content>
+      <Card.Content>
       <h4>{facility.FacilityName}</h4>
       <h5>{facility.RECAREA.length >= 1 ? `Part of ${facility.RECAREA[0]['RecAreaName']}` : null}</h5>
       <h6>{checkAddress(facility.FACILITYADDRESS)}</h6>
       <p>Number of Activities Available: {facility.ACTIVITY.length}</p>
       <p>{parseDescription(facility.FacilityDescription)}</p>
+    </Card.Content>
     </Card>
   )
 }
+// return (
+//   <Card raised id={facility.FacilityID} className="facility-card" style={{backgroundColor:'rgba(118,118,118,0.8)'}}>
+//   <Image src={getImageUrl(facility.MEDIA)} size='small' centered/>
+//   <Link to={newTo}>
+//   <Button as='div' labelPosition='right' className="reservation-button" size='large'>
+//   <Button icon>
+//   <Icon name='calendar check' />
+//   </Button>
+//   <Label basic pointing='left'>
+//   Reserve
+//   </Label>
+//   </Button>
+//   </Link>
+//   <h4>{facility.FacilityName}</h4>
+//   <h5>{facility.RECAREA.length >= 1 ? `Part of ${facility.RECAREA[0]['RecAreaName']}` : null}</h5>
+//   <h6>{checkAddress(facility.FACILITYADDRESS)}</h6>
+//   <p>Number of Activities Available: {facility.ACTIVITY.length}</p>
+//   <p>{parseDescription(facility.FacilityDescription)}</p>
+//   </Card>
+// )

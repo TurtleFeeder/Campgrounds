@@ -1,3 +1,6 @@
+/* font import */
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
 .App {
   text-align: center;
 }
@@ -16,6 +19,7 @@
   justify-content: center;
   font-size: calc(30px + 2vmin);
   color: white;
+  font-family: 'Lobster', cursive;
 }
 
 .App-link {
@@ -75,7 +79,8 @@
 }
 
 .flex-grid .col-right {
-  padding-left: 5vh;
+  width: 30%;
+  padding-left: 2vh;
 }
 
 /* facility card border shadow */
@@ -110,9 +115,10 @@
 
 /* FacilityCard */
 .facility-card {
-  height: 31vw;
-  width: 80%;
+  height: 26vw;
+  min-width: 23vw;
   position: relative;
+  color: white;
 }
 
 /* LoginForm */
@@ -145,7 +151,8 @@
 
 .h1-grey {
   background-color:rgba(118,118,118,0.8);
-  width: 30%;
+  width: 40%;
   margin: auto;
   color: white;
+  border-radius: 10px;
 }
