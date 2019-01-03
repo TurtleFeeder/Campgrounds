@@ -26,15 +26,15 @@ class SignupForm extends React.Component {
       <div className='signup-form'>
         <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as='h2' color='violet' textAlign='center'>
-              <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' /> Signup
-            </Header>
             {this.props.createUserErrorMsg ? <Message error header={this.props.createUserErrorMsg}/> : null}
             <Form
               size='large'
               onSubmit={this.handleSignupSubmit}
             >
               <Segment stacked>
+                <Header as='h2' color='violet' textAlign='center'>
+                <Image src='https://www.freeiconspng.com/uploads/adventure-camping-tent-icon-2.png' /> Signup
+                </Header>
                 <Form.Input
                   fluid
                   icon='user'

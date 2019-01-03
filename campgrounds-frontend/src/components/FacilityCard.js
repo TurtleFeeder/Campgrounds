@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon, Label } from 'semantic-ui-react';
+import { Button, Icon, Label, Card, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 function parseDescription(string) {
@@ -31,8 +31,8 @@ export default function FacilityCard({facility}) {
     state: {facility: {...facility, FacilityImg: getImageUrl(facility.MEDIA)}}
   }
   return (
-    <div id={facility.FacilityID} className="border-shadow facility-card">
-    <img src={getImageUrl(facility.MEDIA)} width={200} height={200} alt={facility.FacilityName}/>
+    <Card id={facility.FacilityID} className="border-shadow facility-card">
+    <Image src={getImageUrl(facility.MEDIA)} size='small' centered/>
     <Link to={newTo}>
       <Button as='div' labelPosition='right' className="reservation-button" size='large'>
         <Button icon>
@@ -48,6 +48,6 @@ export default function FacilityCard({facility}) {
       <h6>{checkAddress(facility.FACILITYADDRESS)}</h6>
       <p>Number of Activities Available: {facility.ACTIVITY.length}</p>
       <p>{parseDescription(facility.FacilityDescription)}</p>
-    </div>
+    </Card>
   )
 }

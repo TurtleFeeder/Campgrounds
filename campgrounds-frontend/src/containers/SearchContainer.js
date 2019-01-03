@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import SearchForm from '../components/SearchForm';
 import Results from './Results';
+import {Loader, Dimmer, Segment} from 'semantic-ui-react';
 
 class SearchContainer extends Component {
   state = {
     facilities: null,
     searchStates: null,
-    selectedStateAbbr: null
+    selectedStateAbbr: null,
+    isLoading: false
   }
 
   componentDidMount() {
@@ -15,20 +17,23 @@ class SearchContainer extends Component {
 
   componentDidUpdate() {
     console.log('%c in SearchContainer componentDidUpdate props','color: yellow', this.props);
-    if (localStorage.getItem('jwt') && this.props.loggedIn === false) {
+    console.log('%c in SearchContainer componentDidUpdate state','color: yellow', this.state);
+    if (localStorage.getItem('jwt') && this.props.loggedIn === false && this.props.authenticatingUser === false) {
       this.props.getUser()
     }
   }
 
   handleSubmit = (result) => {
-    fetch(process.env.REACT_APP_FACILITIES_URL, {
-      method: "POST",
-      headers: {"Content-Type": "application/json; charset=utf-8",},
-      body: JSON.stringify(result)
+    this.setState({isLoading: true}, ()=> {
+      fetch(process.env.REACT_APP_FACILITIES_URL, {
+        method: "POST",
+        headers: {"Content-Type": "application/json; charset=utf-8",},
+        body: JSON.stringify(result)
+      })
+      .then(r=>r.json())
+      .then(data => this.setState({facilities: data, selectedStateAbbr: result.abbrev, isLoading: false}))
     })
-    .then(r=>r.json())
-    .then(data => this.setState({facilities: data, selectedStateAbbr: result.abbrev}))
-  }
+  } // end handleSubmit
 
   render() {
     return (
@@ -39,15 +44,27 @@ class SearchContainer extends Component {
           handleSubmit={this.handleSubmit}
           />
         </div>
+
+        {this.state.isLoading ?
+          <div className="loader-parent">
+            <div className="loader-child">
+              <Dimmer as={'div'} active inverted>
+                <Loader size={'large'} content={'Searching for campground'}/>
+              </Dimmer>
+            </div>
+          </div>
+          :
+          null
+        }
         {this.state.facilities ?
           <Results
-            facilities={this.state.facilities}
-            searchStates={this.state.searchStates}
-            selectedStateAbbr={this.state.selectedStateAbbr}
-            loggedIn={this.props.loggedIn}
+          facilities={this.state.facilities}
+          searchStates={this.state.searchStates}
+          selectedStateAbbr={this.state.selectedStateAbbr}
+          loggedIn={this.props.loggedIn}
           />
-           :
-           null
+          :
+          null
         }
       </div>
     )

@@ -8,13 +8,13 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 15vh;
+  background-color: #767676;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(30px + 2vmin);
   color: white;
 }
 
@@ -39,6 +39,22 @@
   margin: 0 auto;
 }
 
+/* MainContainer background image */
+.main-background {
+  background-image: url('https://2.bp.blogspot.com/-AZHwlyc4fSk/W1DAQREy_MI/AAAAAAAAExM/tsP0jqJhuBgU0R8jC03cZAOLacbY0-tAQCLcBGAs/s1600/HD%2BNature%2BForest%2BWallpaper%2BImages-Wallpaper-hd-images-background-picture-forest-tree-hd-nature%2B%252826%2529.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* Result background color */
+.result-background {
+  background-image: url('https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-041.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
 /* facilities container style */
 .facility-container-style {
   height: 40vw;
@@ -55,11 +71,11 @@
 
 .flex-grid .col-left {
   width: 70%;
+  padding-left: 5vh;
 }
 
 .flex-grid .col-right {
-  width: 30%;
-  padding-right: 20px;
+  padding-left: 5vh;
 }
 
 /* facility card border shadow */
@@ -79,9 +95,23 @@
   padding-top: 5vh;
 }
 
+.loader-parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5vh;
+}
+
+.loader-child {
+  height: 10vh;
+  width: 100vh;
+  position: relative;
+}
+
 /* FacilityCard */
 .facility-card {
-  height: 30vw;
+  height: 31vw;
+  width: 80%;
   position: relative;
 }
 
@@ -111,4 +141,11 @@
   padding-top: 5vh;
   padding-left: 5vh;
   padding-right: 5vh;
+}
+
+.h1-grey {
+  background-color:rgba(118,118,118,0.8);
+  width: 30%;
+  margin: auto;
+  color: white;
 }

@@ -25,7 +25,7 @@ class Map extends Component {
   }
 
     componentDidUpdate(prevProps) {
-      if (this.props.selectedState.abbrev !== prevProps.selectedState.abbrev) {
+      if (this.props.selectedState.abbrev !== prevProps.selectedState.abbrev && this.props.map !== null) {
         this.setState({
           selectedStateAbbrev: this.props.selectedState.abbrev,
           lng: this.props.selectedState.longitude,
