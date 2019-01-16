@@ -120,6 +120,7 @@
   min-width: 23vw;
   position: relative;
   color: white;
+  overflow-y: auto;
 }
 
 /* LoginForm */
