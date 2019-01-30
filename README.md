@@ -25,3 +25,6 @@ This repository contains the front and back end in separate folders.
 
 ## Acknowledgement
 * Data provided for free by [recreation.gov](https://ridb.recreation.gov/docs#/).
+* Default image camera icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/).
+* Forest background image found on Google and [blogspot.com](https://newmobilephonephotos.blogspot.com/2018/07/green-tree-hd-background-pictures.html).
+* Campground tent icon made by [freeiconspng.com](https://www.freeiconspng.com/img/13522).
