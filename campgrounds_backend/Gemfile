@@ -49,8 +49,11 @@ gem 'rest-client'
 # dotenv to prevent .env file from being pushed up to github
 gem 'dotenv-rails', groups: [:development, :test]
 
+# nokogiri to parse data from public API
 gem "nokogiri", "~> 1.8"
 
+# JWT token authentication
 gem "jwt", "~> 2.1"
+
 # Serializer allows you to specify the shape of your data when making requests.
 gem "active_model_serializers", "~> 0.10.8"

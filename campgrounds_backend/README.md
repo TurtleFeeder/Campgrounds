@@ -15,3 +15,13 @@
   - This is the public api that this back-end server pulls and parses data from.
   - You will need to sign up for an account in order to obtain an api key.
 * Please create your own 'TOKEN_SECRET' password and save it into your local .env file for the ENV['TOKEN_SECRET'] used for JWT authentication in the application_controller.rb.
+
+
+## Built With
+* [Ruby on Rails](https://rubyonrails.org/)
+* [PostgreSQL](https://www.postgresql.org/docs/)
+* [RIDB Recreation.gov API](https://ridb.recreation.gov/docs#/)
+* [Dotenv Ruby Gem](https://github.com/bkeepers/dotenv)
+* [JWT Ruby Gem](https://github.com/jwt/ruby-jwt)
+* [Nokogiri Ruby Gem](https://github.com/sparklemotion/nokogiri)
+* [Restclient Ruby Gem](https://github.com/rest-client/rest-client)
