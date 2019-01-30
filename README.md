@@ -17,7 +17,11 @@ This repository contains the front and back end in separate folders.
 ###### NOTE
 * Please obtain an api key to be saved in your local .env file from https://ridb.recreation.gov/docs#/.
   - This is the public api that this back-end server pulls and parses data from.
+  - You will need to sign up for an account in order to obtain an api key.
 * Please create your own 'TOKEN_SECRET' password and save it into your local .env file for the ENV['TOKEN_SECRET'] used for JWT authentication in the application_controller.rb.
 
 **Front End**
 1. Change directory into campgrounds-frontend.
+
+## Acknowledgement
+* Data provided for free by [recreation.gov](https://ridb.recreation.gov/docs#/).
