@@ -21,8 +21,8 @@ This repository contains the front and back end in separate folders.
 * Please create your own 'TOKEN_SECRET' password and save it into your local .env file for the ENV['TOKEN_SECRET'] used for JWT authentication in the application_controller.rb.
 
 **Front End**
-Make sure to have the Rails back end running first before starting the front end.
 
+Make sure to have the Rails back end running first before starting the front end.
 1. Change directory into campgrounds-frontend.
 2. Install all required packages using `npm install`.
 3. Start the development server using `npm start`.
